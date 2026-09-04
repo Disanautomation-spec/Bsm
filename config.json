@@ -1,0 +1,27 @@
+{
+  "symbols": [
+    "STXUSDT",
+    "BABYUSDT",
+    "COREUSDT",
+    "RUNEUSDT",
+    "TUSDT",
+    "SOLVUSDT",
+    "PSTAKEUSDT",
+    "SOVUSDT",
+    "MERLUSDT",
+    "BOBUSDT",
+    "BTRUSDT",
+    "FBUSDT",
+    "CWEBUSDT",
+    "ELAUSDT",
+    "TETUSDT",
+    "VELARUSDT",
+    "PTBUSDT"
+  ],
+  "interval": "15m",
+  "lookback": 120,
+  "refresh_seconds": 30,
+  "signal_threshold": 70,
+  "hot_candle_pct": 2.0,
+  "reversal_target_pct": 2.0
+}
