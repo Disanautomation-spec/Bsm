@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSM — Binance Signal Machine</title>
+<meta name="theme-color" content="#0A0C10">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>BSM <span class="sub">Binance Signal Machine — V2</span></h1>
+    <div class="stream-status">
+      <span class="stream-dot" id="dotTicker" title="Ticker"></span>
+      <span class="stream-dot" id="dotMark" title="Funding"></span>
+      <span class="stream-dot" id="dotLiq" title="Liquidations"></span>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" id="tabScan" onclick="switchTab('scan')">Scanner</div>
+    <div class="tab" id="tabTrack" onclick="switchTab('track')">Track Record</div>
+    <button class="bell-btn" id="bellBtn" onclick="requestAlerts()" title="Enable alerts">🔔</button>
+  </div>
+  <div class="regime" id="regimeBox">
+    <div>
+      <div class="regime-label">Market Breadth (1m)</div>
+      <div class="regime-value mono" id="regimeValue">—</div>
+    </div>
+    <div class="regime-bar"><div class="regime-bar-fill" id="regimeBar" style="width:50%;background:var(--muted);"></div></div>
+  </div>
+</header>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<main>
+  <div id="scanView">
+    <div class="section-label"><span>🔥 Hot Impulses — ranked</span><span class="live-clock mono" id="liveClock">—</span></div>
+    <div id="rows"><div class="empty">Streaming live Binance USDT-perp tickers, funding &amp; liquidations…</div></div>
+    <div class="section-label">Watchlist — largest by volume</div>
+    <div id="watchlist"></div>
+  </div>
+
+  <div id="trackView" style="display:none;">
+    <div class="track-card">
+      <div class="section-label" style="margin:0;">Signal Track Record</div>
+      <div class="track-desc">Every LONG/SHORT bias ≥70 impulse gets logged automatically, then scored against what price actually did 5m / 15m / 60m later. This is the only honest way to know if these thresholds are worth anything.</div>
+      <div class="track-grid" id="trackGrid">
+        <div class="track-stat"><div class="n mono" id="tr5">—</div><div class="l">5m win rate</div></div>
+        <div class="track-stat"><div class="n mono" id="tr15">—</div><div class="l">15m win rate</div></div>
+        <div class="track-stat"><div class="n mono" id="tr60">—</div><div class="l">60m win rate</div></div>
+      </div>
+      <div class="track-list" id="trackList"></div>
+    </div>
+  </div>
+</main>
+
+<div class="detail-overlay" id="overlay">
+  <div class="detail">
+    <div class="detail-head">
+      <div><h2 id="dSym">—</h2><div class="meta" id="dMeta">—</div></div>
+      <button class="close-btn" onclick="closeDetail()">✕</button>
+    </div>
+    <svg class="big-spark" id="dSpark"></svg>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-label">1m / 3m change</div><div class="stat-val" id="d1m3m">—</div></div>
+      <div class="stat"><div class="stat-label">Impulse score</div><div class="stat-val" id="dImpulse">—</div></div>
+      <div class="stat"><div class="stat-label">Funding rate</div><div class="stat-val" id="dFunding">—</div></div>
+      <div class="stat"><div class="stat-label">Volume vs avg</div><div class="stat-val" id="dVol">—</div></div>
+    </div>
+    <div class="bars">
+      <div class="bar-row"><div class="bar-row-label"><span>Short squeeze score</span><span id="dSqueezeN">0</span></div><div class="bar-track"><div class="bar-fill" id="dSqueeze" style="background:var(--up);width:0%;"></div></div></div>
+      <div class="bar-row"><div class="bar-row-label"><span>Long cascade score</span><span id="dCascadeN">0</span></div><div class="bar-track"><div class="bar-fill" id="dCascade" style="background:var(--down);width:0%;"></div></div></div>
+      <div class="bar-row"><div class="bar-row-label"><span>Trap likelihood</span><span id="dTrapN">0</span></div><div class="bar-track"><div class="bar-fill" id="dTrap" style="background:var(--purple);width:0%;"></div></div></div>
+    </div>
+    <div class="note">Heuristic classification from price, volume, funding and live liquidations only. No OI/news/on-chain context yet, no validated win-rate. Check the Track Record tab before trusting any pattern — study it with your own judgment before acting.</div>
+  </div>
+</div>
+
+<footer>
+  Public Binance Futures streams only (ticker, mark price/funding, liquidations), no account or API key. Not financial advice — this is a research and alerting tool; trade decisions and risk are yours.
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
